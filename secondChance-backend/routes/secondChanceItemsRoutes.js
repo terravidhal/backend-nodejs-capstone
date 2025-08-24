@@ -71,9 +71,18 @@ router.post('/', upload.single('file'), async(req, res,next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         //Step 4: task 1 - insert code here
+        const db = await connectToDatabase();
         //Step 4: task 2 - insert code here
+        const collection = db.collection("secondChanceItems");
         //Step 4: task 3 - insert code here
+        const id = req.params.id;
         //Step 4: task 4 - insert code here
+        const secondChanceItem = await collection.findOne({ id: id });
+        if (secondChanceItem) {
+            res.json(secondChanceItem);
+        } else {
+            res.status(404).json({ error: 'Item not found' });
+        }
     } catch (e) {
         next(e);
     }
@@ -83,10 +92,21 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async(req, res,next) => {
     try {
         //Step 5: task 1 - insert code here
+        const db = await connectToDatabase();
         //Step 5: task 2 - insert code here
+        const collection = db.collection("secondChanceItems");
         //Step 5: task 3 - insert code here
+        const id = req.params.id;
         //Step 5: task 4 - insert code here
+        const updateData = req.body;
         //Step 5: task 5 - insert code here
+        const result = await collection.updateOne({ id: id }, { $set: updateData });
+        if (result.matchedCount > 0) {
+            const updatedItem = await collection.findOne({ id: id });
+            res.json(updatedItem);
+        } else {
+            res.status(404).json({ error: 'Item not found' });
+        }
     } catch (e) {
         next(e);
     }
@@ -96,9 +116,18 @@ router.put('/:id', async(req, res,next) => {
 router.delete('/:id', async(req, res,next) => {
     try {
         //Step 6: task 1 - insert code here
+        const db = await connectToDatabase();
         //Step 6: task 2 - insert code here
+        const collection = db.collection("secondChanceItems");
         //Step 6: task 3 - insert code here
+        const id = req.params.id;
         //Step 6: task 4 - insert code here
+        const result = await collection.deleteOne({ id: id });
+        if (result.deletedCount > 0) {
+            res.status(204).send();
+        } else {
+            res.status(404).json({ error: 'Item not found' });
+        }
     } catch (e) {
         next(e);
     }

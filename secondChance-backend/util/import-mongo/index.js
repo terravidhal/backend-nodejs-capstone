@@ -1,4 +1,5 @@
 require('dotenv').config();
+console.log('Mongo URL:', process.env.MONGO_URL);
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 

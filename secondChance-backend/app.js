@@ -5,14 +5,23 @@ const pinoLogger = require('./logger')
 const path = require('path')
 
 const connectToDatabase = require('./models/db')
+const { loadData } = require('./util/import-mongo/index')
 
 const app = express()
 app.use('*', cors())
 const port = 3060
 
-// Connect to MongoDB; we just do this one time
-connectToDatabase().then(() => {
+// Connect to MongoDB and load initial data; we just do this one time
+connectToDatabase().then(async () => {
   pinoLogger.info('Connected to DB')
+  
+  // Load initial data into the database
+  try {
+    await loadData()
+    pinoLogger.info('Initial data loaded successfully')
+  } catch (error) {
+    pinoLogger.error('Error loading initial data:', error)
+  }
 })
   .catch((e) => console.error('Failed to connect to DB', e))
 

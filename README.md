@@ -94,9 +94,9 @@ curl -X POST http://localhost:3060/api/secondchance/items \
   -F name="Bureau" -F description="Bureau en bon état"
 ```
 
-### Notes de déploiement
-- Kubernetes (Frontend): l’URL publique pointe sur l’UI React. Configurer les variables d’environnement du frontend si besoin pour l’URL d’API.
-- Code Engine (Backend): exposer le service, définir `MONGO_URL` et `JWT_SECRET` en variables d’environnement. Le seed initial s’exécute à chaque démarrage.
+### Déploiement
+- Suivre les etapes du fichier [IBM_Cloud_Deployment_Guide.md](https://github.com/terravidhal/backend-nodejs-capstone/blob/main/IBM_Cloud_Deployment_Guide.md)
+
 
 ### Développement
 - Logs: Pino est utilisé (middleware `pino-http` + logger applicatif)
